@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Basic SEO -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Code Runner – coderunner HTML/CSS/JS </title>
+  <meta name="description" content="Instantly write, run, and preview HTML, CSS, and JavaScript.">
+  <link rel="canonical" href="https://your-domain.com/code-runner">
+  <meta name="robots" content="index,follow">
+
+  <!-- Open Graph -->
+  <meta property="og:type"        content="website">
+  <meta property="og:title"       content="Code Runner – Live HTML/CSS/JS Editor">
+  <meta property="og:description" content="Instantly write, run, and preview HTML, CSS, and JavaScript.">
+  <meta property="og:url"         content="https://your-domain.com/code-runner">
+  <meta property="og:image"       content="https://your-domain.com/og-image.png">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card"        content="summary_large_image">
+  <meta name="twitter:title"       content="Code Runner – Live HTML/CSS/JS Editor">
+  <meta name="twitter:description" content="Instantly write, run, and preview HTML, CSS, and JavaScript.">
+  <meta name="twitter:image"       content="https://your-domain.com/og-image.png">
+
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Code Runner",
+    "operatingSystem": "Web",
+    "applicationCategory": "DeveloperApplication"
+  }
+  </script>
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+          data-ad-client="ca-pub-YOUR-PUB-ID"></script>
+
+  <style>
+    body {margin:0;font-family:sans-serif;display:flex;flex-direction:column;height:100vh;}
+    .header {background:#222;color:#fff;padding:8px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+    .tabs {display:flex;}
+    .tab {padding:6px 12px;cursor:pointer;color:#ccc;}
+    .tab.active {background:#444;color:#fff;}
+    .panel {flex:1;display:flex;overflow:hidden;}
+    .editor {width:50%;display:flex;flex-direction:column;border-right:1px solid #ccc;}
+    textarea {flex:1;background:#1e1e1e;color:#fff;border:none;padding:8px;font-family:monospace;font-size:14px;resize:none;}
+    .preview-container {width:50%;display:flex;flex-direction:column;}
+    iframe {flex:1;border:none;}
+    button {margin-left:8px;padding:6px 12px;}
+    @media(max-width:600px){
+      .panel {flex-direction:column;}
+      .editor,.preview-container {width:100%;height:50%;}
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <span>Code Runner</span>
+
+    <!-- Header ad slot -->
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-YOUR-PUB-ID"
+         data-ad-slot="YOUR-AD-SLOT"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+
+    <button id="run">Run</button>
+  </div>
+
+  <div class="panel">
+    <div class="editor">
+      <div class="tabs">
+        <div class="tab active" data-lang="html">HTML</div>
+        <div class="tab" data-lang="css">CSS</div>
+        <div class="tab" data-lang="js">JS</div>
+      </div>
+      <textarea id="html">&lt;!-- HTML here --&gt;</textarea>
+      <textarea id="css" style="display:none">&lt;!-- CSS here --&gt;</textarea>
+      <textarea id="js" style="display:none">// JS here</textarea>
+    </div>
+
+    <div class="preview-container">
+      <!-- In-content ad slot -->
+      <ins class="adsbygoogle"
+           style="display:block;margin:8px 0"
+           data-ad-client="ca-pub-YOUR-PUB-ID"
+           data-ad-slot="YOUR-AD-SLOT"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+
+      <iframe id="preview"></iframe>
+    </div>
+  </div>
+
+  <script>
+    // Tab switching
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelector('.tab.active').classList.remove('active');
+        tab.classList.add('active');
+        ['html','css','js'].forEach(lang => {
+          document.getElementById(lang).style.display = (lang === tab.dataset.lang ? 'block' : 'none');
+        });
+      });
+    });
+
+    // Run code
+    function run() {
+      const h = document.getElementById('html').value;
+      const s = '<style>' + document.getElementById('css').value + '</style>';
+      const j = '<script>' + document.getElementById('js').value + '<\/script>';
+      document.getElementById('preview').src = 'data:text/html;charset=utf-8,' +
+        encodeURIComponent(h + s + j);
+    }
+
+    document.getElementById('run').addEventListener('click', run);
+    window.addEventListener('load', run);
+  </script>
+</body>
+</html>
